@@ -40,6 +40,14 @@ function App() {
         return (
           <div key={ele._id}>
             <p>{ele.title}</p>
+            <button onClick={async () => {
+              try {
+                await axios.delete(`/api/todo/${ele._id}`);
+                setTodos((prevState) => prevState.filter(todo => todo._id !== ele._id));
+              } catch (error) {
+                console.log(error);
+              }
+            }}>Delete</button>
             <br />
           </div>
 

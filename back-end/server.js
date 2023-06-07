@@ -19,6 +19,21 @@ app.post("/api/todo", async (req, res) => {
     res.send(newTodo);
 });
 
+app.delete("/api/todo/:id", async (req, res) => {
+    const todoId = req.params.id;
+    try {
+        const deletedTodo = await Todo.findByIdAndDelete(todoId);
+        if (deletedTodo) {
+            res.send({ message: "Todo wurde erfolgreich gelöscht" });
+        } else {
+            res.status(404).send({ error: "Upsi...Todo konnte nicht gelöscht werden :(" })
+        }
+    } catch (error) {
+        res.status(500).send({ error: "Server error" })
+    }
+});
+
+
 app.listen(PORT, () => {
     console.log("Server running on Port", PORT);
 })
